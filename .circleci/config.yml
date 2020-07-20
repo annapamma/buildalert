@@ -82,11 +82,10 @@ workflows:
       # e.g. [semver:patch] will cause a patch version to be published.
       - orb-tools/dev-promote-prod-from-commit-subject:
           orb-name: oss-tools/buildalert
-
           add-pr-comment: false
           fail-if-semver-not-indicated: true
           publish-version-tag: true
-          ssh-fingerprints: x
+          ssh-fingerprints: 0d:e5:b2:47:33:15:61:2c:0b:04:af:c6:82:2f:ca:25
           requires:
             - integration-test-1
           filters:
