@@ -35,7 +35,6 @@ parameters:
   siren-test:
     type: boolean
     default: false
+
 steps:
-  - run:
-      name: Run monitoring script
-      command: python-script
+  - python-script
