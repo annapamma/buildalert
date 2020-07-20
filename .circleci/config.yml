@@ -85,7 +85,7 @@ workflows:
           add-pr-comment: false
           fail-if-semver-not-indicated: true
           publish-version-tag: true
-          ssh-fingerprints: 0d:e5:b2:47:33:15:61:2c:0b:04:af:c6:82:2f:ca:25
+          ssh-fingerprints: 5e:d5:01:3a:a4:f8:b4:e9:a9:64:b9:6b:45:5a:17:f7
           requires:
             - integration-test-1
           filters:
