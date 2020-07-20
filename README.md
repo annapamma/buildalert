@@ -1,6 +1,8 @@
 # buildalert Orb [![CircleCI Build Status](https://circleci.com/gh/annapamma/buildalert.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/annapamma/buildalert) [![CircleCI Orb Version](https://img.shields.io/badge/endpoint.svg?url=https://badges.circleci.io/orb/oss-tools/buildalert)](https://circleci.com/orbs/registry/orb/oss-tools/buildalert) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/annapamma/buildalert/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
-Utilize this orb to easily add CircleCI build monitoring to your CI/CD pipeline.
+Utilize this orb to easily add CircleCI build monitoring to your CI/CD pipeline. 
+This orb allows you to set up Slack notifications if user has triggered too many builds in a certain
+amount of time, or if there have been too many builds triggered across the organization. 
 
 
 ## Usage
