@@ -1,0 +1,41 @@
+description: >
+  Check for the number of builds triggered per user. Set a threshold for user builds in a certain timeframe.
+  If a user build exceeds this threshold, alert via Slack and cancel all currently running workflows for that user.
+executor: python
+resource_class: small
+parameters:
+  circle-project-org:
+    type: string
+    # default: CIRCLE_PROJECT_USERNAME
+  circle-project-reponame:
+    type: string
+    # default: CIRCLE_PROJECT_REPONAME
+  circle-token-envvar:
+    type: env_var_name
+    # default: SLACK_MONITOR_CIRCLE_TOKEN
+  slack-app-url-envvar:
+    type: env_var_name
+    # default: SLACK_MONITOR_SLACK_APP_URL
+  gh-token-env-var:
+    type: env_var_name
+  cancel-message:
+    type: string
+    default: 'Your builds on CircleCI have exceeded the max builds allowed for a single user.'
+  alert-threshold-seconds:
+    type: integer
+    default: 60
+  # max builds triggered by a single user within threshold_seconds of the current time
+  alert-threshold-max-builds-per-user:
+    type: integer
+    default: 5
+  # max within a minute of the latest build that triggers an alert, must be < 30
+  alert-threshold-max-builds:
+    type: integer
+    default: 5
+  siren-test:
+    type: boolean
+    default: false
+steps:
+  - run:
+      name: Run monitoring script
+      command: python-script

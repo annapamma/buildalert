@@ -1,0 +1,4 @@
+description: >
+  This is an executor using the CCI convenience image for Python 3.7.6
+docker:
+  - image: 'circleci/python:3.7.6'
