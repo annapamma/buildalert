@@ -18,17 +18,26 @@ parameters:
     default: "dev:alpha"
 
 jobs:
+  - buildalert/monitor-user-builds:
+      circle-project-org: 'annapamma'
+      circle-project-reponame: 'sandbox'
+      circle-token-envvar: SLACK_MONITOR_CIRCLE_TOKEN
+      slack-app-url-envvar: SLACK_MONITOR_SLACK_APP_URL
+      gh-token-env-var: SLACK_MONITOR_GH_TOKEN
+      alert-threshold-seconds: 120
+      alert-threshold-max-builds-per-user: 0
+      alert-threshold-max-builds: 0
   # This job is an example of an integration testing job.
   # This job should execute a command from your orb and verify
   # the output is as expected, otherwise the job should fail.
   #
   # Rename this job and add more as needed.
   #
-  integration-test-1:
-    executor: orb-tools/ubuntu
-    steps:
-      - checkout
-    # - your-orb/your-orb-command
+  #  integration-test-1:
+  #    executor: orb-tools/ubuntu
+  #    steps:
+  #      - checkout
+      # - your-orb/your-orb-command
 
 workflows:
   # This `lint-pack_validate_publish-dev` workflow will run on any commit.
