@@ -65,7 +65,7 @@ workflows:
   # It is meant to be triggered by the "trigger-integration-tests-workflow"
   # job, and run tests on <your orb>@dev:${CIRCLE_SHA1:0:7}.
   integration-tests_prod-release:
-    when: << pipeline.parameters.run-integration-tests >>
+#    when: << pipeline.parameters.run-integration-tests >>
     jobs:
       # your integration test jobs go here: essentially, run all your orb's
       # jobs and commands to ensure they behave as expected. or, run other
@@ -95,7 +95,7 @@ workflows:
           publish-version-tag: true
           ssh-fingerprints: 5e:d5:01:3a:a4:f8:b4:e9:a9:64:b9:6b:45:5a:17:f7
           requires:
-            - integration-test-1
+            - buildalert/monitor-user-builds
           filters:
             branches:
               only: master
