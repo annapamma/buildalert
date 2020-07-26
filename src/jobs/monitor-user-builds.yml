@@ -157,17 +157,17 @@ steps:
             vcs = 'gh'
 
             try:
-              circle_token_env_var = os.getenv('SLACK_MONITOR_CIRCLE_TOKEN_ENVVAR')
+              circle_token_env_var = os.getenv('circle-token-envvar')
             except TypeError:
               print('circle_token_env_var')
             print('circle_token_env_var', circle_token_env_var)
             try:
-              slack_app_url_env_var = os.getenv('SLACK_MONITOR_SLACK_APP_URL_ENVVAR')
+              slack_app_url_env_var = os.getenv('slack_app_url_env_var')
             except TypeError:
               print('slack_app_url_env_var')
             print('slack_app_url_env_var', slack_app_url_env_var)
             try:
-              gh_token_env_var = os.getenv('SLACK_MONITOR_GITHUB_TOKEN_ENVVAR')
+              gh_token_env_var = os.getenv('gh_token_env_var')
             except TypeError:
               print('slack_app_url_env_var')
             print('slack_app_url_env_var', slack_app_url_env_var)
