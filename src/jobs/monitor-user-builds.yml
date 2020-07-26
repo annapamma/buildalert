@@ -6,18 +6,17 @@ resource_class: small
 parameters:
   circle-project-org:
     type: string
-    # default: CIRCLE_PROJECT_USERNAME
   circle-project-reponame:
     type: string
-    # default: CIRCLE_PROJECT_REPONAME
   circle-token-envvar:
     type: env_var_name
-    # default: SLACK_MONITOR_CIRCLE_TOKEN
+    default: SLACK_MONITOR_CIRCLE_TOKEN
   slack-app-url-envvar:
     type: env_var_name
-    # default: SLACK_MONITOR_SLACK_APP_URL
+    default: SLACK_MONITOR_SLACK_APP_URL
   gh-token-env-var:
     type: env_var_name
+    default: SLACK_MONITOR_GH_TOKEN
   cancel-message:
     type: string
     default: 'Your builds on CircleCI have exceeded the max builds allowed for a single user.'
