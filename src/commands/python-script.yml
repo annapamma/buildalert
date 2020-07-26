@@ -125,11 +125,23 @@ steps:
         def main():
             vcs = 'gh'
 
-            circle_token_env_var = os.getenv('SLACK_MONITOR_CIRCLE_TOKEN_ENVVAR')
-            slack_app_url_env_var = os.getenv('SLACK_MONITOR_SLACK_APP_URL_ENVVAR')
-            gh_token_env_var = os.getenv('SLACK_MONITOR_GITHUB_TOKEN_ENVVAR')
-            cancel_msg = os.getenv('CANCEL_MESSAGE')
+            try:
+              circle_token_env_var = os.getenv('SLACK_MONITOR_CIRCLE_TOKEN_ENVVAR')
+            except TypeError:
+              print('circle_token_env_var')
+            try:
+              slack_app_url_env_var = os.getenv('SLACK_MONITOR_SLACK_APP_URL_ENVVAR')
+            except TypeError:
+              print('slack_app_url_env_var')
+            try:
+              gh_token_env_var = os.getenv('SLACK_MONITOR_GITHUB_TOKEN_ENVVAR')
+            except TypeError:
+              print('slack_app_url_env_var')
 
+            try:
+              cancel_msg = os.getenv('CANCEL_MESSAGE')
+            except TypeError:
+              print('cancel_msg')
             # circle project vars
             org = os.getenv('SLACK_MONITOR_CIRCLE_PROJECT_ORG')
             repo = os.getenv('SLACK_MONITOR_CIRCLE_PROJECT_REPONAME')
