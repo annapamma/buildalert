@@ -129,22 +129,32 @@ steps:
               circle_token_env_var = os.getenv('SLACK_MONITOR_CIRCLE_TOKEN_ENVVAR')
             except TypeError:
               print('circle_token_env_var')
+            print('circle_token_env_var', circle_token_env_var)
             try:
               slack_app_url_env_var = os.getenv('SLACK_MONITOR_SLACK_APP_URL_ENVVAR')
             except TypeError:
               print('slack_app_url_env_var')
+            print('slack_app_url_env_var', slack_app_url_env_var)
             try:
               gh_token_env_var = os.getenv('SLACK_MONITOR_GITHUB_TOKEN_ENVVAR')
             except TypeError:
               print('slack_app_url_env_var')
+            print('slack_app_url_env_var', slack_app_url_env_var)
 
             try:
               cancel_msg = os.getenv('CANCEL_MESSAGE')
             except TypeError:
               print('cancel_msg')
+
             # circle project vars
-            org = os.getenv('SLACK_MONITOR_CIRCLE_PROJECT_ORG')
-            repo = os.getenv('SLACK_MONITOR_CIRCLE_PROJECT_REPONAME')
+            try:
+              org = os.getenv('circle-project-org')
+            except TypeError:
+              print('circle-project-org')
+            try:
+              repo = os.getenv('circle-project-reponame')
+            except TypeError:
+              print('circle-project-reponame')
 
             # secrets
             circle_token = os.getenv(circle_token_env_var)
