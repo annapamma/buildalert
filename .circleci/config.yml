@@ -56,7 +56,7 @@ workflows:
     jobs:
       # an example job
       - buildalert/monitor-builds:
-          name: siren-text
+          name: siren-test
           context: 'build_alert'
           circle-project-org: 'annapamma'
           circle-project-reponame: 'sandbox'
