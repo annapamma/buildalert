@@ -9,34 +9,55 @@ resource_class: small
 parameters:
   circle-project-org:
     type: string
+    description: >-
+      The organization to monitor
   circle-project-reponame:
     type: string
+    description: >-
+      The repository to monitor
   circle-token-envvar:
     type: string
     default: 'SLACK_MONITOR_CIRCLE_TOKEN'
+    description: >-
+      CircleCI API token. Used to query the CircleCI API.
   slack-app-url-envvar:
     type: env_var_name
     default: SLACK_MONITOR_SLACK_APP_URL
+    description: >-
+      The Slack app URL for sending notifications
   gh-token-envvar:
     type: env_var_name
     default: SLACK_MONITOR_GH_TOKEN
+    description: >-
+      Your Github API token. Used to comment on pull requests for cancelled builds.
   cancel-message:
     type: string
     default: 'Your builds on CircleCI have exceeded the max builds allowed for a single user.'
+    description: >-
+      Cancel message to post on pull requests for cancelled builds.
   alert-threshold-seconds:
     type: integer
     default: 60
+    description: >-
+      Time frame to check for excess builds, in seconds.
   # max builds triggered by a single user within threshold_seconds of the current time
   alert-threshold-max-builds-per-user:
     type: integer
     default: 5
+    description: >-
+      Maximum builds allowed within the threshold for a single user before an alert is triggered
+      and the user's workflows are cancelled.
   # max within a minute of the latest build that triggers an alert, must be < 30
   alert-threshold-max-builds:
     type: integer
     default: 5
+    description: >-
+      Maximum builds allowed within the threshold for the entire repository before an alert is triggered.
   siren-test:
     type: boolean
     default: false
+    description: >-
+      If true, adds "THIS IS JUST A TEST" to the alert.
 
 environment:
   circle-project-org: << parameters.circle-project-org >>
