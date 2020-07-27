@@ -17,7 +17,7 @@ parameters:
   slack-app-url-envvar:
     type: env_var_name
     default: SLACK_MONITOR_SLACK_APP_URL
-  gh-token-env-var:
+  gh-token-envvar:
     type: env_var_name
     default: SLACK_MONITOR_GH_TOKEN
   cancel-message:
@@ -43,7 +43,7 @@ environment:
   circle-project-reponame: << parameters.circle-project-reponame >>
   circle-token-envvar: << parameters.circle-token-envvar >>
   slack-app-url-envvar: << parameters.slack-app-url-envvar >>
-  gh-token-env-var: << parameters.gh-token-env-var >>
+  gh-token-env-var: << parameters.gh-token-envvar >>
   cancel-message: << parameters.cancel-message >>
   alert-threshold-seconds: << parameters.alert-threshold-seconds >>
   alert-threshold-max-builds-per-user: << parameters.alert-threshold-max-builds-per-user >>
@@ -177,12 +177,12 @@ steps:
               print('circle_token_env_var')
             print('circle_token_env_var', circle_token_env_var)
             try:
-              slack_app_url_env_var = os.getenv('slack-app-url-env-var')
+              slack_app_url_env_var = os.getenv('slack-app-url-envvar')
             except TypeError:
               print('slack_app_url_env_var')
             print('slack_app_url_env_var', slack_app_url_env_var)
             try:
-              gh_token_env_var = os.getenv('gh-token-env-var')
+              gh_token_env_var = os.getenv('gh-token-envvar')
             except TypeError:
               print('slack_app_url_env_var')
             print('slack_app_url_env_var', slack_app_url_env_var)
