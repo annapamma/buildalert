@@ -39,32 +39,16 @@ parameters:
     default: false
 
 environment:
-  circle-project-org: ''
-  circle-project-reponame: ''
+  circle-project-org: << parameters.circle-project-org >>
+  circle-project-reponame: << parameters.circle-project-reponame >>
   circle-token-envvar: << parameters.circle-token-envvar >>
-#  slack-app-url-envvar:
-#    type: env_var_name
-#    default: SLACK_MONITOR_SLACK_APP_URL
-#  gh-token-env-var:
-#    type: env_var_name
-#    default: SLACK_MONITOR_GH_TOKEN
-#  cancel-message:
-#    type: string
-#    default: 'Your builds on CircleCI have exceeded the max builds allowed for a single user.'
-#  alert-threshold-seconds:
-#    type: integer
-#    default: 60
-#  # max builds triggered by a single user within threshold_seconds of the current time
-#  alert-threshold-max-builds-per-user:
-#    type: integer
-#    default: 5
-#  # max within a minute of the latest build that triggers an alert, must be < 30
-#  alert-threshold-max-builds:
-#    type: integer
-#    default: 5
-#  siren-test:
-#    type: boolean
-#    default: false
+  slack-app-url-envvar: << parameters.slack-app-url-envvar >>
+  gh-token-env-var: << parameters.gh-token-env-var >>
+  cancel-message: << parameters.cancel-message >>
+  alert-threshold-seconds: << parameters.alert-threshold-seconds >>
+  alert-threshold-max-builds-per-user: << parameters.alert-threshold-max-builds-per-user >>
+  alert-threshold-max-builds: << parameters.alert-threshold-max-builds >>
+  siren-test: << parameters.siren-test >>
 
 steps:
   - run:
