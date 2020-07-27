@@ -136,7 +136,7 @@ steps:
 
         def alert_slack(slack_app_url_str, alert_text_str, siren_test=False):
             if siren_test:
-                alert_text_str = "\n*THIS IS JUST A TEST: *" + alert_text_str
+                alert_text_str = "\n*THIS IS JUST A TEST*\n" + alert_text_str
             user_alert_msg = json.dumps({
                 "blocks": [
                     {
