@@ -76,9 +76,9 @@ workflows:
           context: 'build_alert'
           circle-project-org: 'annapamma'
           circle-project-reponame: 'sandbox'
-          circle-token-envvar: SLACK_MONITOR_CIRCLE_TOKEN
-          slack-app-url-envvar: SLACK_MONITOR_SLACK_APP_URL
-          gh-token-env-var: SLACK_MONITOR_GH_TOKEN
+          circle-token-envvar: 'SLACK_MONITOR_CIRCLE_TOKEN'
+          slack-app-url-envvar: 'SLACK_MONITOR_SLACK_APP_URL'
+          gh-token-env-var: 'SLACK_MONITOR_GH_TOKEN'
           alert-threshold-seconds: 120
           alert-threshold-max-builds-per-user: 0
           alert-threshold-max-builds: 0

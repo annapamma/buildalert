@@ -9,8 +9,8 @@ parameters:
   circle-project-reponame:
     type: string
   circle-token-envvar:
-    type: env_var_name
-    default: SLACK_MONITOR_CIRCLE_TOKEN
+    type: string
+    default: 'SLACK_MONITOR_CIRCLE_TOKEN'
   slack-app-url-envvar:
     type: env_var_name
     default: SLACK_MONITOR_SLACK_APP_URL
