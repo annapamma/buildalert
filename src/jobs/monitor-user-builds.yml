@@ -177,18 +177,18 @@ steps:
               print('circle_token_env_var')
             print('circle_token_env_var', circle_token_env_var)
             try:
-              slack_app_url_env_var = os.getenv('slack_app_url_env_var')
+              slack_app_url_env_var = os.getenv('slack-app-url-env-var')
             except TypeError:
               print('slack_app_url_env_var')
             print('slack_app_url_env_var', slack_app_url_env_var)
             try:
-              gh_token_env_var = os.getenv('gh_token_env_var')
+              gh_token_env_var = os.getenv('gh-token-env-var')
             except TypeError:
               print('slack_app_url_env_var')
             print('slack_app_url_env_var', slack_app_url_env_var)
 
             try:
-              cancel_msg = os.getenv('CANCEL_MESSAGE')
+              cancel_msg = os.getenv('cancel-message')
             except TypeError:
               print('cancel_msg')
 
