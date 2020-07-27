@@ -83,6 +83,18 @@ workflows:
           alert-threshold-max-builds-per-user: 0
           alert-threshold-max-builds: 0
           siren-test: true
+
+      - buildalert/monitor-builds:
+          context: 'build_alert'
+          circle-project-org: 'annapamma'
+          circle-project-reponame: 'sandbox'
+          circle-token-envvar: 'SLACK_MONITOR_CIRCLE_TOKEN'
+          slack-app-url-envvar: 'SLACK_MONITOR_SLACK_APP_URL'
+          gh-token-envvar: 'SLACK_MONITOR_GH_TOKEN'
+          alert-threshold-seconds: 120
+          alert-threshold-max-builds-per-user: 0
+          alert-threshold-max-builds: 0
+
       # publish a semver version of the orb. relies on
       # the commit subject containing the text "[semver:patch|minor|major|skip]"
       # as that will determine whether a patch, minor or major
