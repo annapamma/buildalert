@@ -156,8 +156,9 @@ steps:
 
 
         def alert_slack(slack_app_url_str, alert_text_str, siren_test=False, user_alert=True):
+            header_txt = ''
             if siren_test:
-              header_text = "\n*THIS IS JUST A TEST*\n"
+              header_txt = "\n*THIS IS JUST A TEST*\n"
             header_txt += '*USER ALERT*'
             if not user_alert:
               header_txt += '*BUILD ALERT*'
