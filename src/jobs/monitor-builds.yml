@@ -307,7 +307,7 @@ steps:
                                  f"{pipelines_run_under_threshold[-1]} and {current_time}."
                 else:
                     build_alert_text = f"There have been *{len(pipelines_run_under_threshold)} pipelines* triggered since {current_time}."
-                alert_slack(slack_app_url_str=slack_app_url, alert_text_str=build_alert_text, siren_test=siren_test)
+                alert_slack(slack_app_url_str=slack_app_url, alert_text_str=build_alert_text, siren_test=siren_test, user_alert=False)
 
 
         main()
