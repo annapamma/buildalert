@@ -165,10 +165,12 @@ steps:
 
         def cancel_workflows(errant_workflows, circle_token):
             for workflow_id in errant_workflows:
-                url = f'https://circleci.com/api/v2/workflow/{workflow_id}/cancel'
-                make_request(f'{url}',
-                             circle_token=circle_token)  # makes HTTP req
-
+                try:
+                  url = f'https://circleci.com/api/v2/workflow/{workflow_id}/cancel'
+                  make_request(f'{url}',
+                               circle_token=circle_token)  # makes HTTP req
+                except urllib.error.HTTPError:
+                  continue
 
         def main():
             vcs = 'gh'
