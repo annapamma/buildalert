@@ -1,10 +1,77 @@
 description: >
-  Main Python script for build
+  Check for the number of builds triggered per user. Set a threshold for user builds in a certain timeframe.
+  If a user build exceeds this threshold, alert via Slack and cancel all currently running workflows for that user.
+
+executor: python
+resource_class: small
+
+# do params have to be passed as env vars?
+parameters:
+  circle-project-org:
+    type: string
+    description: >-
+      The organization to monitor
+  circle-project-reponame:
+    type: string
+    description: >-
+      The repository to monitor
+  circle-token-envvar:
+    type: string
+    default: 'SLACK_MONITOR_CIRCLE_TOKEN'
+    description: >-
+      CircleCI API token. Used to query the CircleCI API.
+  slack-app-url-envvar:
+    type: env_var_name
+    default: SLACK_MONITOR_SLACK_APP_URL
+    description: >-
+      The Slack app URL for sending notifications
+  gh-token-envvar:
+    type: env_var_name
+    default: SLACK_MONITOR_GH_TOKEN
+    description: >-
+      Your Github API token. Used to comment on pull requests for cancelled builds.
+  cancel-message:
+    type: string
+    default: 'Your builds on CircleCI have exceeded the max builds allowed for a single user.'
+    description: >-
+      Cancel message to post on pull requests for cancelled builds.
+  alert-threshold-seconds:
+    type: integer
+    default: 60
+    description: >-
+      Time frame to check for excess builds, in seconds.
+  # max builds triggered by a single user within threshold_seconds of the current time
+  alert-threshold-max-builds-per-user:
+    type: integer
+    default: 5
+    description: >-
+      Maximum builds allowed within the threshold for a single user before an alert is triggered
+      and the user's workflows are cancelled.
+  # max within a minute of the latest build that triggers an alert, must be < 30
+  alert-threshold-max-builds:
+    type: integer
+    default: 5
+    description: >-
+      Maximum builds allowed within the threshold for the entire repository before an alert is triggered.
+  siren-test:
+    type: boolean
+    default: false
+    description: >-
+      If true, adds "THIS IS JUST A TEST" to the alert.
+
+environment:
+  circle-project-org: << parameters.circle-project-org >>
+  circle-project-reponame: << parameters.circle-project-reponame >>
+  circle-token-envvar: << parameters.circle-token-envvar >>
+  slack-app-url-envvar: << parameters.slack-app-url-envvar >>
+  gh-token-envvar: << parameters.gh-token-envvar >>
+  cancel-message: << parameters.cancel-message >>
+  alert-threshold-seconds: << parameters.alert-threshold-seconds >>
+  alert-threshold-max-builds-per-user: << parameters.alert-threshold-max-builds-per-user >>
+  alert-threshold-max-builds: << parameters.alert-threshold-max-builds >>
+  siren-test: << parameters.siren-test >>
 
 steps:
-  - run:
-      name: Install python monitoring script dependencies
-      command: pip install --user requests
   - run:
       name: Run Python script to check builds
       command: |
@@ -17,6 +84,7 @@ steps:
 
 
         def make_request(endpoint, circle_token):
+            print('req: ', endpoint)
             header = {
                 'Circle-Token': circle_token,
                 'Accept': 'application/json',
@@ -86,16 +154,21 @@ steps:
             return [item for sublist in l for item in sublist]
 
 
-        def alert_slack(slack_app_url_str, alert_text_str, siren_test=False):
+        def alert_slack(slack_app_url_str, alert_text_str, siren_test=False, user_alert=True):
+            header_txt = ''
             if siren_test:
-                alert_text_str += "** THIS IS JUST A TEST **"
+              header_txt = "\n*THIS IS JUST A TEST:* "
+            if user_alert:
+              header_txt += '*USER ALERT*'
+            else:
+              header_txt += '*BUILD ALERT*'
             user_alert_msg = json.dumps({
                 "blocks": [
                     {
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": '*USER ALERT*'
+                            "text": header_txt
                         }
                     },
                     {
@@ -117,22 +190,43 @@ steps:
 
         def cancel_workflows(errant_workflows, circle_token):
             for workflow_id in errant_workflows:
-                url = f'https://circleci.com/api/v2/workflow/{workflow_id}/cancel'
-                make_request(f'{url}',
-                             circle_token=circle_token)  # makes HTTP req
-
+                try:
+                  url = f'https://circleci.com/api/v2/workflow/{workflow_id}/cancel'
+                  make_request(f'{url}',
+                               circle_token=circle_token)  # makes HTTP req
+                except urllib.error.HTTPError:
+                  continue
 
         def main():
             vcs = 'gh'
 
-            circle_token_env_var = os.getenv('SLACK_MONITOR_CIRCLE_TOKEN_ENVVAR')
-            slack_app_url_env_var = os.getenv('SLACK_MONITOR_SLACK_APP_URL_ENVVAR')
-            gh_token_env_var = os.getenv('SLACK_MONITOR_GITHUB_TOKEN_ENVVAR')
-            cancel_msg = os.getenv('CANCEL_MESSAGE')
+            try:
+              circle_token_env_var = os.getenv('circle-token-envvar')
+            except TypeError:
+              print('circle_token_env_var')
+            try:
+              slack_app_url_env_var = os.getenv('slack-app-url-envvar')
+            except TypeError:
+              print('slack_app_url_env_var')
+            try:
+              gh_token_env_var = os.getenv('gh-token-envvar')
+            except TypeError:
+              print('slack_app_url_env_var')
+
+            try:
+              cancel_msg = os.getenv('cancel-message')
+            except TypeError:
+              print('cancel_msg')
 
             # circle project vars
-            org = os.getenv('SLACK_MONITOR_CIRCLE_PROJECT_ORG')
-            repo = os.getenv('SLACK_MONITOR_CIRCLE_PROJECT_REPONAME')
+            try:
+              org = os.getenv('circle-project-org')
+            except TypeError:
+              print('circle-project-org')
+            try:
+              repo = os.getenv('circle-project-reponame')
+            except TypeError:
+              print('circle-project-reponame')
 
             # secrets
             circle_token = os.getenv(circle_token_env_var)
@@ -141,19 +235,19 @@ steps:
 
             # from parameters
             threshold_seconds = int(
-                os.getenv('SLACK_MONITOR_PARAM_THRESHOLD_SECONDS')
+                os.getenv('alert-threshold-seconds')
             )
             # max builds triggered by a single user within threshold_seconds of the current time
             alert_threshold_user = int(
-                os.getenv('SLACK_MONITOR_PARAM_THRESHOLD_MAX_BUILDS_PER_USER')
+                os.getenv('alert-threshold-max-builds-per-user')
             )
             # max within a minute of the latest build that triggers an alert, must be < 30
             alert_threshold_build = int(
-                os.getenv('SLACK_MONITOR_PARAM_THRESHOLD_MAX_BUILDS')
+                os.getenv('alert-threshold-max-builds')
             )
 
             # check if siren test, write message as "test"
-            siren_test = os.getenv('SLACK_MONITOR_PARAM_SIREN_TEST') == 'true'
+            siren_test = os.getenv('siren-test') == 'true'
 
             project_slug = f'{vcs}/{org}/{repo}'
             pipelines = pipelines_res(project_slug, circle_token)
@@ -214,7 +308,7 @@ steps:
                                  f"{pipelines_run_under_threshold[-1]} and {current_time}."
                 else:
                     build_alert_text = f"There have been *{len(pipelines_run_under_threshold)} pipelines* triggered since {current_time}."
-                alert_slack(slack_app_url_str=slack_app_url, alert_text_str=build_alert_text, siren_test=siren_test)
+                alert_slack(slack_app_url_str=slack_app_url, alert_text_str=build_alert_text, siren_test=siren_test, user_alert=False)
 
 
         main()

@@ -1,11 +1,9 @@
 version: 2.1
 
 description: >
-  Sample orb description
-  # What will your orb allow users to accomplish?
-  # Descriptions should be short, simple, and informative.
+  Set up Slack notifications if a user has triggered too many builds in a certain
+  amount of time, or if there have been too many builds triggered across the organization.
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
-  home_url: "https://www.website.com/docs"
-  source_url: "https://www.github.com/EXAMPLE_ORG/EXAMPLE_PROJECT"
+  source_url: "https://github.com/annapamma/buildalert/"
