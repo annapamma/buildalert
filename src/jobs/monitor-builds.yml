@@ -84,7 +84,7 @@ steps:
 
 
         def make_request(endpoint, circle_token):
-            print('req: ', endpoint, circle_token)
+            print('req: ', endpoint)
             header = {
                 'Circle-Token': circle_token,
                 'Accept': 'application/json',
@@ -102,7 +102,6 @@ steps:
 
         def pipelines_res(project_slug, circle_token):
             pipelines_endpoint = f'https://circleci.com/api/v2/project/{project_slug}/pipeline'
-            print(pipelines_endpoint)
             pipelines = make_request(pipelines_endpoint, circle_token)
             return pipelines['items']
 
@@ -158,7 +157,7 @@ steps:
         def alert_slack(slack_app_url_str, alert_text_str, siren_test=False, user_alert=True):
             header_txt = ''
             if siren_test:
-              header_txt = "\n*THIS IS JUST A TEST*\n"
+              header_txt = "\n*THIS IS JUST A TEST: *"
             header_txt += '*USER ALERT*'
             if not user_alert:
               header_txt += '*BUILD ALERT*'
@@ -204,17 +203,14 @@ steps:
               circle_token_env_var = os.getenv('circle-token-envvar')
             except TypeError:
               print('circle_token_env_var')
-            print('circle_token_env_var', circle_token_env_var)
             try:
               slack_app_url_env_var = os.getenv('slack-app-url-envvar')
             except TypeError:
               print('slack_app_url_env_var')
-            print('slack_app_url_env_var', slack_app_url_env_var)
             try:
               gh_token_env_var = os.getenv('gh-token-envvar')
             except TypeError:
               print('slack_app_url_env_var')
-            print('gh-token-envvar', gh_token_env_var)
 
             try:
               cancel_msg = os.getenv('cancel-message')
@@ -233,7 +229,6 @@ steps:
 
             # secrets
             circle_token = os.getenv(circle_token_env_var)
-            print('circle-token ', circle_token)
             slack_app_url = os.getenv(slack_app_url_env_var)
             gh_token = os.getenv(gh_token_env_var)
 
@@ -254,7 +249,6 @@ steps:
             siren_test = os.getenv('siren-test') == 'true'
 
             project_slug = f'{vcs}/{org}/{repo}'
-            print('project slug ', project_slug)
             pipelines = pipelines_res(project_slug, circle_token)
             current_time = get_now()
             oldest_pipeline_date = pipelines[-1]["created_at"][:-1]
