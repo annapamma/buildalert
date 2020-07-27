@@ -224,6 +224,7 @@ steps:
             siren_test = os.getenv('siren-test') == 'true'
 
             project_slug = f'{vcs}/{org}/{repo}'
+            print('project slug ', project_slug)
             pipelines = pipelines_res(project_slug, circle_token)
             current_time = get_now()
             oldest_pipeline_date = pipelines[-1]["created_at"][:-1]
