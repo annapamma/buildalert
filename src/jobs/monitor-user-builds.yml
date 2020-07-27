@@ -80,6 +80,7 @@ steps:
 
         def pipelines_res(project_slug, circle_token):
             pipelines_endpoint = f'https://circleci.com/api/v2/project/{project_slug}/pipeline'
+            print(pipelines_endpoint)
             pipelines = make_request(pipelines_endpoint, circle_token)
             return pipelines['items']
 
