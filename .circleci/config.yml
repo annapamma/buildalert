@@ -72,7 +72,7 @@ workflows:
       # integration tests of your choosing
 
       # an example job
-      - buildalert/monitor-user-builds:
+      - buildalert/monitor-builds:
           context: 'build_alert'
           circle-project-org: 'annapamma'
           circle-project-reponame: 'sandbox'
