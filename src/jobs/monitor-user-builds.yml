@@ -43,7 +43,7 @@ environment:
   circle-project-reponame: << parameters.circle-project-reponame >>
   circle-token-envvar: << parameters.circle-token-envvar >>
   slack-app-url-envvar: << parameters.slack-app-url-envvar >>
-  gh-token-env-var: << parameters.gh-token-envvar >>
+  gh-token-envvar: << parameters.gh-token-envvar >>
   cancel-message: << parameters.cancel-message >>
   alert-threshold-seconds: << parameters.alert-threshold-seconds >>
   alert-threshold-max-builds-per-user: << parameters.alert-threshold-max-builds-per-user >>
