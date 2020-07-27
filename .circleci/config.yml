@@ -96,7 +96,7 @@ workflows:
           publish-version-tag: true
           ssh-fingerprints: 5e:d5:01:3a:a4:f8:b4:e9:a9:64:b9:6b:45:5a:17:f7
           requires:
-            - buildalert/monitor-user-builds
+            - buildalert/monitor-builds
           filters:
             branches:
               only: master

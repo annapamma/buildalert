@@ -7,6 +7,7 @@ amount of time, or if there have been too many builds triggered across the organ
 
 ## Usage
 
+The best way to use this is with a private repository to monitor your OSS repository. You can use 
 Example use-cases are provided on the orb [registry page](https://circleci.com/orbs/registry/orb/oss-tools/buildalert#usage-examples). Source for these examples can be found within the `src/examples` directory.
 
 
