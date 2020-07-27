@@ -83,7 +83,6 @@ workflows:
           alert-threshold-max-builds-per-user: 0
           alert-threshold-max-builds: 0
           siren-test: true
-
       # publish a semver version of the orb. relies on
       # the commit subject containing the text "[semver:patch|minor|major|skip]"
       # as that will determine whether a patch, minor or major

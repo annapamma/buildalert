@@ -155,16 +155,19 @@ steps:
             return [item for sublist in l for item in sublist]
 
 
-        def alert_slack(slack_app_url_str, alert_text_str, siren_test=False):
+        def alert_slack(slack_app_url_str, alert_text_str, siren_test=False, user_alert=True):
             if siren_test:
-                alert_text_str = "\n*THIS IS JUST A TEST*\n" + alert_text_str
+              header_text = "\n*THIS IS JUST A TEST*\n"
+            header_txt += '*USER ALERT*'
+            if not user_alert:
+              header_txt += '*BUILD ALERT*'
             user_alert_msg = json.dumps({
                 "blocks": [
                     {
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": '*USER ALERT*'
+                            "text": header_txt
                         }
                     },
                     {
