@@ -185,7 +185,7 @@ steps:
               gh_token_env_var = os.getenv('gh-token-envvar')
             except TypeError:
               print('slack_app_url_env_var')
-            print('slack_app_url_env_var', slack_app_url_env_var)
+            print('gh-token-envvar', gh_token_env_var)
 
             try:
               cancel_msg = os.getenv('cancel-message')
