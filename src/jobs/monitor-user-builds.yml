@@ -63,6 +63,7 @@ steps:
 
 
         def make_request(endpoint, circle_token):
+            print('req: ', endpoint, circle_token)
             header = {
                 'Circle-Token': circle_token,
                 'Accept': 'application/json',
@@ -205,6 +206,7 @@ steps:
 
             # secrets
             circle_token = os.getenv(circle_token_env_var)
+            print('circle-token ', circle_token)
             slack_app_url = os.getenv(slack_app_url_env_var)
             gh_token = os.getenv(gh_token_env_var)
 
