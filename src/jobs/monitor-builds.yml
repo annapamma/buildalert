@@ -83,14 +83,14 @@ steps:
         import datetime
 
 
-        def make_request(endpoint, circle_token):
+        def make_request(endpoint, circle_token, method='GET'):
             print('req: ', endpoint)
             header = {
                 'Circle-Token': circle_token,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-            req = urllib.request.Request(endpoint, headers=header)
+            req = urllib.request.Request(endpoint, headers=header, method=method)
             return transform_response(req)
 
 
@@ -193,7 +193,8 @@ steps:
                 try:
                   url = f'https://circleci.com/api/v2/workflow/{workflow_id}/cancel'
                   make_request(f'{url}',
-                               circle_token=circle_token)  # makes HTTP req
+                               circle_token=circle_token, # makes HTTP req
+                               method='POST')
                 except urllib.error.HTTPError:
                   continue
 
